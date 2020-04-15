@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using CodeCamp.Data;
@@ -38,9 +39,8 @@ namespace CodeCamp.Controllers
                 // return this.StatusCode(StatusCodes.Status500InternalServerError, "Server Failure");
             }
         }
-        
-        
-        
+
+
         [HttpGet("{moniker}")]
         public async Task<ActionResult<CampModel>> Get(string moniker)
         {
@@ -55,6 +55,23 @@ namespace CodeCamp.Controllers
             catch (Exception)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Invalid moniker provided.");
+            }
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<CampModel[]>> SearchByDate(DateTime currentDate, bool includeTalks = false)
+        {
+            try
+            {
+                var results = await _repository.GetAllCampsByEventDate(currentDate, includeTalks);
+
+                if (!results.Any()) return NotFound();
+
+                return _mapper.Map<CampModel[]>(results);
+            }
+            catch (Exception)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Search failed, please try again.");;
             }
         }
     }
