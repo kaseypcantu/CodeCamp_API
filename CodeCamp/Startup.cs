@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using CodeCamp.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,6 +40,8 @@ namespace CodeCamp {
             // services.AddDbContextPool<CampContext> (options => {
             //     options.UseSqlServer (_connection);
             // });
+
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddControllers ();
 
