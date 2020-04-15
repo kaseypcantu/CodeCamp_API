@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using CodeCamp.Data;
+using CodeCamp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,21 +21,25 @@ namespace CodeCamp.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult<CampModel[]>> Get()
+        public async Task<ActionResult<CampModel[]>> Get(bool includeTalks = false)
         {
             try
             {
-                var results = await _repository.GetAllCampsAsync();
+                var results = await _repository.GetAllCampsAsync(includeTalks);
 
                 CampModel[] models = _mapper.Map<CampModel[]>(results);
 
                 return models;
             }
-            catch (Exception)
-            {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            catch (Exception e)
+            {    
+                Console.WriteLine(e);
+                throw;
+                // return this.StatusCode(StatusCodes.Status500InternalServerError, "Server Failure");
             }
         }
+        
+        
         
         [HttpGet("{moniker}")]
         public async Task<ActionResult<CampModel>> Get(string moniker)

@@ -1,5 +1,6 @@
 using AutoMapper;
 using CodeCamp.Data.Entities;
+using CodeCamp.Models;
 
 namespace CodeCamp.Data
 {
@@ -7,8 +8,8 @@ namespace CodeCamp.Data
     {
         public CampProfile()
         {
-            this.CreateMap<Camp, CampModel>();
+            this.CreateMap<Camp, CampModel>()
+                .ForMember(c => c.Venue, o => o.MapFrom(m => m.Location.VenueName));
         }
-        
     }
 }
