@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CodeCamp.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
     public class CampsController : ControllerBase
     {
@@ -72,6 +73,20 @@ namespace CodeCamp.Controllers
             catch (Exception)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Search failed, please try again.");;
+            }
+        }
+
+
+        public async Task<ActionResult<CampModel[]>> Post(CampModel model)
+        {
+            try
+            {
+                // TODO: implement this POST functionality.
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Data was not stored: something went wrong.");
             }
         }
     }
