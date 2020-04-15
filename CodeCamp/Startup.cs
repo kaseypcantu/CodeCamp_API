@@ -16,8 +16,8 @@ using Microsoft.Extensions.Logging;
 
 namespace CodeCamp {
     public class Startup {
-        private string _saAccessKey = null;
-        private string _connection = null;
+        // private string _saAccessKey = null;
+        // private string _connection = null;
 
         public Startup (IConfiguration configuration) {
             Configuration = configuration;
@@ -27,16 +27,18 @@ namespace CodeCamp {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices (IServiceCollection services) {
-            _saAccessKey = Configuration["CodeCampDataBase:SA_PASSWORD"];
-
-            var builder = new SqlConnectionStringBuilder (
-                Configuration.GetConnectionString ("CodeCamp"));
-            builder.Password = _saAccessKey;
-            _connection = builder.ConnectionString;
-
-            services.AddDbContextPool<CampContext> (options => {
-                options.UseSqlServer (_connection);
-            });
+            // TODO: figure out the ASP.NET Secrets usage
+            // _saAccessKey = Configuration["CodeCampDataBase:SA_PASSWORD"];
+            //
+            // var builder = new SqlConnectionStringBuilder (
+            //     Configuration.GetConnectionString ("CodeCamp"));
+            // builder.Password = _saAccessKey;
+            // _connection = builder.ConnectionString;
+            
+            // Commented this out for now, seems to still connect to my DB without this code.
+            // services.AddDbContextPool<CampContext> (options => {
+            //     options.UseSqlServer (_connection);
+            // });
 
             services.AddControllers ();
 
